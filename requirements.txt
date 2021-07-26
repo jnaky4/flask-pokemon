@@ -1,0 +1,5 @@
+Flask~=2.0.1
+Werkzeug~=2.0.1
+Authlib~=0.15.4
+python-dotenv~=0.18.0
+PyJWT~=2.1.0
