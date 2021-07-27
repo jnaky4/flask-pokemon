@@ -1,0 +1,9 @@
+
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
+*.xml
+*.iml
+__pycache__/app.cpython-38.pyc
+api/__pycache__/api.cpython-38.pyc
+Auth0/__pycache__/Auth0.cpython-38.pyc
+.env
