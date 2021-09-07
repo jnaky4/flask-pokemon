@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account</title>
+    <style>
+        #form-wrapper{
+            {#display: grid;#}
+            {#grid-template-columns: 100px 100px 100px;#}
+            {#grid-template-rows: 50px 50px;#}
+        }
+        .form{
+            display: block;
+            {#position: fixed;#}
+
+        }
+        label{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <form name="createUser" method="post" action="/">
+        <div id="form-wrapper">
+            <label for="email">Email Address:
+                <input name="email" class='form' type="email" inputmode="email" required>
+            </label>
+            <label for="password">Password:
+                <input name="password" class='form' type="password" inputmode="text" required>
+            </label>
+            <label for="confirm password">Confirm Password:
+                <input name="confirm password" class='form' type="password" inputmode="text" required>
+            </label>
+            <label for="first name">First Name:
+                <input name="first name" class='form' type="text" inputmode="text" required>
+            </label>
+            <label for="last name">Last Name:
+                <input name="last name" class='form' type="text" inputmode="text" required>
+            </label>
+            <label for="tel">Phone Number:
+                <input name="tel" class='form' type="tel" inputmode="tel" required>
+            </label>
+            <label for="address1">Address Line 1:
+                <input name="address1" class='form' type="text" inputmode="text" required>
+            </label>
+            <label for="address2">Address Line 2:
+                <input name="address2" class='form' type="text" inputmode="text" required>
+            </label>
+            <label for="city">City:
+                <input name="city" class='form' type="text" inputmode="text" required>
+            </label>
+            <label for="state">State:
+                <input name="state" class='form' type="text" inputmode="text" required>
+            </label>
+            <label for="zip code">Zip Code:
+                <input name="zip code" class='form' type="number" inputmode="numeric" required>
+            </label>
+            <button type="submit">Create User</button>
+        </div>
+    </form>
+<script>
+
+</script>
+</body>
+</html>

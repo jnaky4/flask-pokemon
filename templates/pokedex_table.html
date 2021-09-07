@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabulator</title>
+    <link href="/static/tabulator/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="/static/tabulator/dist/js/tabulator.min.js"></script>
+    <style>
+        body{
+            background: black;
+            color: white;
+        }
+        #pokemon-table{
+            border-spacing: 0;
+            width: 100%;
+        }
+        th{
+            text-align: left;
+        }
+        td{
+            text-align: left;
+            {#border: 1px solid gray;#}
+            {#border: none;#}
+            {#white-space: pre;#}
+            {#white-space:pre-wrap;#}
+            {#word-wrap:break-word;#}
+
+        }
+        .pokemon-img{
+            width: 10%;
+        }
+        .pokemon-img:hover{
+            width: 50%;
+            transition: .5s ease-in-out;
+        }
+        .delete-icon{
+            width: 10%;
+        }
+    </style>
+</head>
+<body>
+    <table id="pokemon-table">
+        <tr>
+            <th>Info</th>
+            <th>Stats</th>
+{#            <th>Dexnum</th>
+            <th>Name</th>
+            <th>Type1</th>
+            <th>Type2</th>#}
+            <th>Image</th>
+            <th>Delete</th>
+        </tr>
+        {% for dexnum in pokemon_dict %}
+            <tr>
+                <td class="pokedex">
+                    <div>Dexnum: {{ pokemon_dict[dexnum]['Pokemon'].dexnum|safe }}</div>
+                    <div>Name: <span class="name">{{ pokemon_dict[dexnum]['Pokemon'].name|safe }}</span></div>
+                    <div>Type 1: <span class="type1">{{ pokemon_dict[dexnum]['Pokemon'].type1|safe }}</span></div>
+                    <div>Type 2: <span class="type2">{{ pokemon_dict[dexnum]['Pokemon'].type2|safe }}</span></div>
+                </td>
+                <td class="stats">
+                    <br/>
+                    <div>HP: {{ pokemon_dict[dexnum]['Stats'].hp }}</div>
+                    <div>Attack: {{ pokemon_dict[dexnum]['Stats'].attack}}</div>
+                    <div>Defense: {{ pokemon_dict[dexnum]['Stats'].defense }}</div>
+                    <div>Special Attack: {{ pokemon_dict[dexnum]['Stats'].special_attack }}</div>
+                    <div>Special Defense: {{ pokemon_dict[dexnum]['Stats'].special_defense }}</div>
+                    <div>Speed: {{ pokemon_dict[dexnum]['Stats'].speed }}</div>
+                    <br/>
+                </td>
+                <td><img class="pokemon-img" alt="`{{ pokemon_dict[dexnum]['Pokemon'].name|safe }}`" src="https://www.serebii.net/pokemon/art/{{ (dexnum|string).rjust(3, '0') }}.png"></td>
+                <td><a href="/pokedex?dexnum={{ dexnum }}"><img class="delete-icon" alt="delete" src="https://icons.iconarchive.com/icons/awicons/vista-artistic/256/delete-icon.png"></a></td>
+            </tr>
+        {% endfor %}
+
+    </table>
+</body>
+<script>
+
+    function color_type(classname){
+        let type1 = document.getElementsByClassName(classname);
+        {#let type2 = document.getElementsByClassName("type2");#}
+        for (let i = 0; i < type1.length; i++){
+            console.log(type1[i].textContent);
+            switch (type1[i].textContent) {
+                case("Grass"):
+                    type1[i].style.color = "green";
+                    break;
+                case("Bug"):
+                    type1[i].style.color = "lightgreen";
+                    break;
+                case("Fire"):
+                    type1[i].style.color = "red";
+                    break;
+                case("Ghost"):
+                case("Poison"):
+                case("Psychic"):
+                    type1[i].style.color = "purple";
+                    break;
+                case("Water"):
+                    type1[i].style.color = "blue";
+                    break;
+                case("Ice"):
+                    type1[i].style.color = "lightblue";
+                    break;
+                case("Ground"):
+                case("Rock"):
+                case("Fighting"):
+                    type1[i].style.color = "brown";
+                    break;
+                case("Electric"):
+                    type1[i].style.color = "yellow";
+                    break;
+                default:
+                    type1[i].style.color = "white";
+                    break;
+            }
+
+        }
+    }
+    color_type("type1");
+    color_type("type2");
+
+</script>
+</html>

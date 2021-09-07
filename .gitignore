@@ -4,3 +4,4 @@ venv
 client_secrets.json
 .env
 .snowflake_config
+*.json

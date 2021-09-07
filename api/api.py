@@ -1,4 +1,5 @@
 from flask import Blueprint
+from Models.PokemonModel import Pokemon
 
 
 api_endpoints = Blueprint('api', __name__, url_prefix='/api')
