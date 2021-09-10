@@ -30,6 +30,7 @@ from typing import Dict, List
 import pprint
 import jwt
 import json
+import time
 
 from Pokemon.Pokemon import pokemon_csv_dict, createPokemon
 
@@ -47,7 +48,7 @@ from Tables.PokedexTable import Pokedex_table
 from Tables.UserTable import UserTable
 from User.UserFunctions import userExist
 
-
+from User.UserFunctions import current_milli_time
 
 # print(pokemon_csv_data[25])
 
@@ -226,12 +227,12 @@ def create_user():
             """
               )
 
+        print(f"time: {current_milli_time()%1000000000}")
         session.add(User(
-            id=1,
             name=request.form['first name'] + " " + request.form['last name'],
             email=request.form['email'],
             password=request.form['password'],
-            telephone=int(request.form['tel']),
+            telephone=request.form['tel'],
             address=request.form['address1'] + " " + request.form['address2'],
             city=request.form['city'],
             state=request.form['state'],

@@ -8,12 +8,12 @@ class Pokemon(db.Model):
     __tablename__ = 'Pokedex'
     dexnum = Column(Integer, primary_key=True)
     # some databases require len of stings
-    name = Column(String(11))
-    type1 = Column(String(10))
-    type2 = Column(String(10))
+    name = Column(String(11), nullable=False)
+    type1 = Column(String(10), nullable=False)
+    type2 = Column(String(10), nullable=True)
     stage = Column(String(12))
     evolve_level = Column(Integer)
-    gender_ratio = Column(String(5))
+    gender_ratio = Column(String(10))
     height = Column(Float(3))
     weight = Column(Float(3))
     description = Column(String(125))

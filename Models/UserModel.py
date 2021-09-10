@@ -6,15 +6,15 @@ class User(db.Model):
     # A class using Declarative at a minimum needs a __tablename__ attribute,
     # and at least one Column which is part of a primary key
     __tablename__ = 'Users'
-    id = Column(Integer, Sequence('seq_reg_id_70', increment=1, start=1), primary_key=True)
+    id = Column(Integer, primary_key=True)
     # some databases require len of stings
-    name = Column(String(25))
+    name = Column(String(50))
     email = Column(String(25))
     password = Column(String(25))
-    telephone = Column(Integer)
-    address = Column(String(125))
+    telephone = Column(String(10))
+    address = Column(String(250))
     city = Column(String(25))
-    state = Column(String(2))
+    state = Column(String(25))
     zipcode = Column(Integer)
     # __init__ where are you?
 
