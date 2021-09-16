@@ -63,15 +63,7 @@ if ENV_FILE:
 
 app = Flask(__name__)
 
-# Database URL
-"""
-can include username, password, hostname, database name as well as optional keyword arguments for additional configuration.
-typical form: dialect+driver://username:password@host:port/database
-https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls
-"""
 
-
-""""""
 
 # db.init_app(app)
 
@@ -89,20 +81,8 @@ https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls
 # print(Pikachu.name)
 
 
-
-
-# Local Connection
-# in-memory-only SQLite database
-"""
-The Engine, when first returned by create_engine(), 
-has not actually tried to connect to the database yet; 
-that happens only the first time it is asked to perform a task against the database.
-"""
-# engine = create_engine('sqlite:///:memory:', echo=True)
-# Todo figure out correct way, without using check_same_thread
-# engine = create_engine('sqlite:///:memory:', connect_args={'check_same_thread': False})
-# engine = create_engine('sqlite:///:memory:', connect_args={'check_same_thread': False})
-
+# Connection Explanation:
+# Driver :// user : password @ hostname(uri) : port / Database
 engine = create_engine('postgresql://postgres:pokemon@localhost:5432/Pokemon')
 
 
@@ -244,7 +224,7 @@ def create_user():
         user_count = session.query(User).count()
         print(f"User Count: {user_count}")
 
-        #
+        # Example of Delete from database
         # user_query = session.query(User).filter(User.name.ilike(request.form['first name'] + "%"))
         # print(user_query.first())
         # # session.delete(User(id=1))
