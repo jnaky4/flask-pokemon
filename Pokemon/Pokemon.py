@@ -1,6 +1,8 @@
 import pandas as pd
 from typing import Dict
 from Models.PokemonModel import Pokemon
+import os
+
 
 def get_csv_route(filename):
     cwd = os.path.abspath(os.path.dirname(__file__))
