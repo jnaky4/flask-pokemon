@@ -2,7 +2,14 @@ import pandas as pd
 from typing import Dict
 from Models.PokemonModel import Pokemon
 
-pokemon_csv = "./static/CSV/Pokemon.csv"
+def get_csv_route(filename):
+    cwd = os.path.abspath(os.path.dirname(__file__))
+    print(cwd)
+    csv = os.path.join(cwd, '..', 'static', 'CSV', filename)
+    return csv
+
+
+pokemon_csv = get_csv_route('POKEMON.csv')
 
 # explanation of csv reader
 # https://www.delftstack.com/howto/python/python-csv-to-dictionary/
