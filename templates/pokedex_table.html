@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Tabulator</title>
-    <link href="/static/tabulator/dist/css/tabulator.min.css" rel="stylesheet">
-    <script type="text/javascript" src="/static/tabulator/dist/js/tabulator.min.js"></script>
     <style>
         body{
             background: black;
@@ -55,7 +53,7 @@
                 <td class="pokedex">
                     <div>Dexnum: {{ pokemon_dict[dexnum]['Pokemon'].dexnum|safe }}</div>
                     <div>Name: <span class="name">{{ pokemon_dict[dexnum]['Pokemon'].name|safe }}</span></div>
-                    <div>Type 1: <span class="type1">{{ pokemon_dict[dexnum]['Pokemon'].type1|safe }}</span></div>
+                    <div>Type 1: <span class="hidden_type1">{{ pokemon_dict[dexnum]['Pokemon'].type1|safe }}</span></div>
                     <div>Type 2: <span class="type2">{{ pokemon_dict[dexnum]['Pokemon'].type2|safe }}</span></div>
                 </td>
                 <td class="stats">
@@ -68,7 +66,8 @@
                     <div>Speed: {{ pokemon_dict[dexnum]['Stats'].speed }}</div>
                     <br/>
                 </td>
-                <td><img class="pokemon-img" alt="`{{ pokemon_dict[dexnum]['Pokemon'].name|safe }}`" src="https://www.serebii.net/pokemon/art/{{ (dexnum|string).rjust(3, '0') }}.png"></td>
+{#                <td><img class="pokemon-img" alt="`{{ pokemon_dict[dexnum]['Pokemon'].name|safe }}`" src="https://www.serebii.net/pokemon/art/{{ (dexnum|string).rjust(3, '0') }}.png"></td>#}
+                <td><img class="pokemon-img" alt="`{{ pokemon_dict[dexnum]['Pokemon'].name|safe }}`" src="/static/images/Pokemon/{{ (dexnum|string).rjust(3, '0') }}{{ pokemon_dict[dexnum]['Pokemon'].name|safe }}.png"></td>
                 <td><a href="/pokedex?dexnum={{ dexnum }}"><img class="delete-icon" alt="delete" src="https://icons.iconarchive.com/icons/awicons/vista-artistic/256/delete-icon.png"></a></td>
             </tr>
         {% endfor %}

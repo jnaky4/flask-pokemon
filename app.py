@@ -21,7 +21,7 @@ from home.main_page import home_blueprint
 from api.api import api_endpoints
 from flask_sqlalchemy import SQLAlchemy
 
-from sqlalchemy import select, create_engine, Column, Integer, String, Float, Table, MetaData, delete
+from sqlalchemy import select, create_engine, Column, Integer, String, Float, Table, MetaData, delete, or_
 from sqlalchemy.orm import Session, declarative_base, sessionmaker
 from sqlalchemy.sql import func
 
@@ -42,15 +42,17 @@ from Models.PokemonModel import Pokemon
 from Models.UserModel import User
 from Models.BaseStatModel import Base_Stat
 
-# Tables Imports Not needed
-from Tables import metadata
-from Tables.PokedexTable import Pokedex_table
-from Tables.UserTable import UserTable
-from User.UserFunctions import userExist
+# # Tables Imports Not needed
+# from Tables import metadata
+# from Tables.PokedexTable import Pokedex_table
+# from Tables.UserTable import UserTable
+# from User.UserFunctions import userExist
 
 from User.UserFunctions import current_milli_time
+from Pokemon.Pokemon import typing_csv_dict, get_all_pokemon_weakness_resistance
 
-
+# print(typing_csv_dict["Grass"]["Fire"])
+# get_all_pokemon_weakness_resistance("Water", "Psychic")
 
 # print(pokemon_csv_data[25])
 
@@ -87,19 +89,6 @@ app = Flask(__name__)
 # Driver :// user : password @ hostname(uri) : port / Database
 engine = create_engine('postgresql://postgres:pokemon@localhost:5432/Pokemon')
 
-
-"""
-The MetaData object contains all of the schema constructs we’ve associated with it. 
-It supports a few methods of accessing these table objects, 
-such as the sorted_tables accessor which returns a list of each Table object in order of foreign key dependency 
-(that is, each table is preceded by all tables which it references):
-"""
-
-# print("here")
-for table in metadata.sorted_tables:
-    print(f"tablename: {table.name}")
-
-
 """
 The usual way to issue CREATE is to use create_all() on the MetaData object. 
 This method will issue queries that first check for the existence of each individual table, 
@@ -125,23 +114,6 @@ session = Session()
 
 
 
-# for i in range(1, 152):
-#     created_pokemon = createPokemon(i, pokemon_csv_dict)
-#     session.add(created_pokemon)
-#     session.commit()
-#
-# pokemon_count = session.query(Pokemon).count()
-# print(f"pokemon_count: {pokemon_count}")
-#
-#
-# pokemon_query = session.query(Pokemon).filter(Pokemon.name.ilike("Pi%"))
-# print(f"""
-#     First Object: {pokemon_query.first()}
-#
-#         """
-#     )
-
-
 
 app.register_blueprint(ehandle, url_prefix="")
 app.register_blueprint(authO, url_prefix="")
@@ -150,6 +122,11 @@ app.register_blueprint(api_endpoints, url_prefix="")
 
 # engine = db.engine
 # connection = engine.connect()
+
+
+@app.route('/')
+def main():
+    return render_template('main.html')
 
 
 @app.route('/crm/')
@@ -166,7 +143,8 @@ def login():
 
 @app.route('/pokedex')
 @cross_origin()
-def data_visuals():
+def pokedex_table():
+
     if len(request.args) > 0:
         dexnum = request.args.get("dexnum")
         print(f"Dexnum: {dexnum}")
@@ -184,10 +162,10 @@ def data_visuals():
     for p in session.query(Pokemon).all():
         pokemon_dict[p.dexnum] = {}
         pokemon_dict[p.dexnum]['Pokemon'] = p
+    print(pokemon_dict)
 
     for b in session.query(Base_Stat).all():
         pokemon_dict[b.dexnum]['Stats'] = b
-
 
     return render_template('pokedex_table.html', pokemon_dict=pokemon_dict)
 
@@ -240,6 +218,44 @@ def create_user():
         # print(f"User Count: {user_count}")
 
     return render_template('createUser.html')
+
+
+@app.route('/pokedex_grid')
+def pokedex_grid():
+    pokemon_dict = {}
+
+    # if type passed in as url param, only query pokemon with matching type
+    if request.args.get('type'):
+        clicked_type = request.args.get('type')
+        for p in session.query(Pokemon).filter(or_(Pokemon.type1 == clicked_type, Pokemon.type2 == clicked_type,)):
+            pokemon_dict[p.dexnum] = {}
+            pokemon_dict[p.dexnum]['Pokemon'] = p
+            pokemon_dict[p.dexnum]['Type'] = get_all_pokemon_weakness_resistance(p.type1, p.type2)
+            # print(p.dexnum)
+            b = session.query(Base_Stat).filter_by(dexnum=p.dexnum)
+            for s in b:
+                pokemon_dict[p.dexnum]['Stats'] = s
+            # print(pokemon_dict[p.dexnum]['Stats'])
+        # for b in session.query(Base_Stat).all():
+        #     pokemon_dict[b.dexnum]['Stats'] = b
+
+    else:
+        for p in session.query(Pokemon).all():
+            pokemon_dict[p.dexnum] = {}
+            pokemon_dict[p.dexnum]['Pokemon'] = p
+            # pokemon_dict[p.dexnum]['Type'] = get_all_pokemon_weakness_resistance(Pokemon.type1, Pokemon.type2)
+            pokemon_dict[p.dexnum]['Type'] = get_all_pokemon_weakness_resistance(p.type1, p.type2)
+            # print(type)
+
+        for b in session.query(Base_Stat).all():
+            pokemon_dict[b.dexnum]['Stats'] = b
+
+    return render_template('Pokedex_Grid.html', pokemon_dict=pokemon_dict)
+
+
+@app.route('/1')
+def test_route():
+    return render_template("test.html")
 
 
 if __name__ == '__main__':

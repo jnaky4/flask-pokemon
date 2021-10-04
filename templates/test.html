@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container{
+            position: relative;
+        }
+        .img{
+            {#background-image: url("/static/images/Holo.png");#}
+            display: block;
+            position: absolute;
+            z-index: 2;
+            {#background: none;#}
+        }
+        .img:hover{
+            {#opacity: 0;#}
+            background: white;
+            transition: 2s;
+        }
+        .holo{
+            position: absolute;
+            top: 0;
+            z-index: 1;
+            opacity: 50;
+        }
+        .holo:hover{
+            {#opacity: 100%;#}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+{#        <img class="holo" alt="holo" src="/static/images/Holo.png" width="400" height="400">#}
+        <img class="img" src="/static/images/Pokemon/001Bulbasaur.png" alt="Pokedex" width="400" height="400"/>
+{#        <img class="holo" alt="holo" src="/static/images/B_Holo.png" width="400" height="400">#}
+
+    </div>
+
+</body>
+</html>
