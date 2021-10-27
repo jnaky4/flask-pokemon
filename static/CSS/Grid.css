@@ -5,6 +5,7 @@ body {
 	background-color: #000000;
 	margin: 0;
 }
+/*Start of Menu Styling*/
 .fixed_menu{
 	width: 100%;
 	z-index: 4;
@@ -14,48 +15,101 @@ body {
 	left: 0;
 	margin-right: auto;
 	margin-left: auto;
-	height: 12%;
-	/*border: 1px solid red;*/
+	height: 20%;
+	/*border: 1px solid green;*/
+	padding-right: 1%;
+	padding-left: 1%;
+	background-color: white;
 }
-#button_wrapper{
+.nav_link{
 	/*border: 1px solid red;*/
+	padding: 17px;
+	width: 16%;
+	display: inline-flex;
+}
+.nav_image_wrapper{
 	width: 100%;
-	bottom: 5%;
-	height: 100%;
 	position: relative;
 	display: inline;
 }
-.nav_link{
-
+.nav_text{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -150%);
+	font-family: "Lucida Console", "Courier New", monospace;
+	font-size: 3em;
 }
 .menu_button{
 	margin: 0;
 	padding: 0;
 	height: auto;
-	width: 19%;
+	width: 100%;
 	/*width: auto;*/
 	/*height: 10%;*/
 }
+#home, #profile, #fight, #run, #reset_button{
+	image-rendering: pixelated;
+}
 #home{
 	background-color: #6096AA;
+}
+#home:hover{
+	background-color: #666;
 }
 
 #profile{
 	background-color: #29738F;
 
 }
+#profile:hover{
+	background-color: #666;
+}
 #fight{
 	background-color: #F1E5D8;
-
+}
+#fight:hover{
+	background-color: #666;
 }
 #run{
 	background-color: #CEC2B8;
-
+}
+#run:hover{
+	background-color: #666;
 }
 #reset_button{
 	background-color: #7F6F62;
-
 }
+#reset_button:hover{
+	background-color: #666;
+}
+.menu_pokeball_tl, .menu_pokeball_tr, .menu_pokeball_bl, .menu_pokeball_br{
+	image-rendering: pixelated;
+	width: 13.5%;
+	height: auto;
+	position: absolute;
+}
+.menu_pokeball_tl{
+	left: 0;
+	top: 0;
+	transform: translate(-33%, -33%);
+}
+.menu_pokeball_tr{
+	right: 0;
+	top: 0;
+	transform: translate(33%, -33%);
+}
+.menu_pokeball_bl{
+	bottom: 0;
+	left: 0;
+	transform: translate(-33%, 24%);
+}
+.menu_pokeball_br{
+	bottom: 0;
+	right: 0;
+	transform: translate(33%, 24%);
+}
+/*End of Menu Styling*/
 /* Container */
 .container {
 	/*border: 1px solid blue;*/
@@ -96,16 +150,24 @@ body {
 .cards:hover{
 	/*width: 100%;*/
 	/*box-shadow: inset 13px 13px 0 0 #FFFFFF;*/
-	box-shadow: 13px 13px 0 0 #111;
+	box-shadow: 13px 13px 5px 0 #111;
 	z-index: 1;
 
+}
+.delete-icon{
+	/*border: 2px solid black;*/
+	height: 20px;
+	width: auto;
+	float: right;
+	margin: 0;
+	padding: 0;
 }
 /*wrapper for tags above image*/
 .card_header{
 	/*border: 2px solid red;*/
 	display: inline-flex;
 	width: 90%;
-	margin: 2% 5% 0 5%;
+	margin: 0 5% 0 5%;
 	height: 25px;
 	transform: translate(0, 10px);
 }
@@ -124,13 +186,11 @@ body {
 	font-weight: bolder;
 	text-align: left;
 	/*padding: 0 0 0 5%;*/
-
 }
 .hp {
 	font-weight: bold;
 	/*padding: 0 5% 0 0;*/
 	text-align: right;
-
 }
 .stage_wrapper{
 	display: flex;

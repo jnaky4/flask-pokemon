@@ -10,14 +10,61 @@
 <body>
 <!-- Main Container -->
 <nav class="fixed_menu">
-    <div id="buton_wrapper">
-        <a class="nav_link"><img id="home" alt="button" class="menu_button" src="/static/images/Menu5.png"></a>
-        <a class="nav_link"><img id="profile" alt="button" class="menu_button" src="/static/images/Menu5.png"></a>
-        <a class="nav_link"><img id="fight" alt="button" class="menu_button" src="/static/images/Menu5.png"></a>
-        <a class="nav_link"><img id="run" alt="button" class="menu_button" src="/static/images/Menu5.png"></a>
+{#    <div id="buton_wrapper">#}
+        <a class="nav_link">
 
-        <a class="nav_link"><img id="reset_button" alt="button" class="menu_button" src="/static/images/Menu5.png"></a>
-    </div>
+            <div class="nav_image_wrapper">
+                <p class="nav_text">home</p>
+                <img id="home" alt="button" class="menu_button" src="/static/images/base_menu.png">
+                <img alt="menu-pokeball" class="menu_pokeball_tl" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_tr" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_bl" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_br" src="/static/images/menu_pokeball.png">
+            </div>
+        </a>
+        <a class="nav_link">
+            <div class="nav_image_wrapper">
+                <p class="nav_text">profile</p>
+                <img id="profile" alt="button" class="menu_button" src="/static/images/base_menu.png">
+                <img alt="menu-pokeball" class="menu_pokeball_tl" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_tr" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_bl" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_br" src="/static/images/menu_pokeball.png">
+            </div>
+
+        </a>
+        <a class="nav_link">
+            <div class="nav_image_wrapper">
+                <p class="nav_text">fight</p>
+                <img id="fight" alt="button" class="menu_button" src="/static/images/base_menu.png">
+                <img alt="menu-pokeball" class="menu_pokeball_tl" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_tr" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_bl" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_br" src="/static/images/menu_pokeball.png">
+            </div>
+        </a>
+        <a class="nav_link">
+            <div class="nav_image_wrapper">
+                <p class="nav_text">run</p>
+                <img id="run" alt="button" class="menu_button" src="/static/images/base_menu.png">
+                <img alt="menu-pokeball" class="menu_pokeball_tl" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_tr" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_bl" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_br" src="/static/images/menu_pokeball.png">
+            </div>
+        </a>
+
+        <a class="nav_link" href="/pokedex_grid">
+            <div class="nav_image_wrapper">
+                <p class="nav_text">reset</p>
+                <img id="reset_button" alt="button" class="menu_button" src="/static/images/base_menu.png">
+                <img alt="menu-pokeball" class="menu_pokeball_tl" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_tr" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_bl" src="/static/images/menu_pokeball.png">
+                <img alt="menu-pokeball" class="menu_pokeball_br" src="/static/images/menu_pokeball.png">
+            </div>
+        </a>
+{#    </div>#}
 </nav>
 <div class="container">
     <!-- Header -->
@@ -28,7 +75,9 @@
         {% if loop.index0 % 4 == 0 %}
             <div class="gallery">
         {% endif %}
-    <div class="cards">
+    <div class="cards {{ pokemon_dict[dexnum]['Pokemon'].type1|safe }}">
+
+        <a href="/pokedex_grid?delete={{ dexnum }}"><img class="delete-icon" alt="delete" src="/static/images/delete.png"></a>
         <div class="card_header">
             <p class="name">{{ pokemon_dict[dexnum]['Pokemon'].name|safe }}</p>
             <p class="hp">{{ pokemon_dict[dexnum]['Stats'].hp }} HP</p>
@@ -76,7 +125,6 @@
                 <th>Imm</th>
                 <th>S-Rst</th>
                 <th>Rst</th>
-                {#                        <th>Ntrl</th>#}
                 <th>Weak</th>
                 <th>S-Weak</th>
             </tr>
@@ -105,12 +153,6 @@
                         {% endfor %}
                     </div>
                 </td>
-                {#                        <td>#}
-                {#                            {% for type in pokemon_dict[dexnum]['Type'][1.0] %}#}
-                {#                            <img class="type_icon2" alt="immune" src="/static/images/Type_Icons/{{ type|safe }}.png">#}
-                {#                            {% endfor %}#}
-                {#                        </td>#}
-
                 <td>
                     <div class="type_icon_table_wrapper">
                         {% for type in pokemon_dict[dexnum]['Type'][2.0] %}
@@ -129,26 +171,25 @@
                 </td>
             </tr>
         </table>
-        <span class="hidden_type1" id="{{ pokemon_dict[dexnum]['Pokemon'].type1|safe }}"></span>
-{#        <div class="bottom_row">#}
-            <div class="bottom_row_wrapper">
-                <div class="illustrator">Illus. Ken Sugimori</div>
-                <div class="restorer">Restorer. <a class="restorer_link" href="https://twitter.com/FLECKABEN">Fleckaben</a></div>
-                <div class="creation">@1995-2000 Nintendo, Creatures, GAMEFREAK.</div>
-                <div class="icon_wrapper">
-                    <a href="{{ url_for('pokedex_grid', type=pokemon_dict[dexnum]['Pokemon'].type1|safe) }}">
-                        <img class="type_icon" alt="{{ pokemon_dict[dexnum]['Pokemon'].type1|safe }}"
-                             src="/static/images/Type_Icons/{{ pokemon_dict[dexnum]['Pokemon'].type1|safe }}.png">
+
+        <div class="bottom_row_wrapper">
+            <div class="illustrator">Illus. Ken Sugimori</div>
+            <div class="restorer">Restorer. <a class="restorer_link" href="https://twitter.com/FLECKABEN">Fleckaben</a></div>
+            <div class="creation">@1995-2000 Nintendo, Creatures, GAMEFREAK.</div>
+            <div class="icon_wrapper">
+                <a href="{{ url_for('pokedex_grid', type=pokemon_dict[dexnum]['Pokemon'].type1|safe) }}">
+                    <img class="type_icon" alt="{{ pokemon_dict[dexnum]['Pokemon'].type1|safe }}"
+                         src="/static/images/Type_Icons/{{ pokemon_dict[dexnum]['Pokemon'].type1|safe }}.png">
+                </a>
+                {% if pokemon_dict[dexnum]['Pokemon'].type2|safe != 'None' %}
+                    <a href="{{ url_for('pokedex_grid', type=pokemon_dict[dexnum]['Pokemon'].type2|safe) }}">
+                        <img class="type_icon2" alt="{{ pokemon_dict[dexnum]['Pokemon'].type2|safe }}"
+                             src="/static/images/Type_Icons/{{ pokemon_dict[dexnum]['Pokemon'].type2|safe }}.png">
                     </a>
-                    {% if pokemon_dict[dexnum]['Pokemon'].type2|safe != 'None' %}
-                        <a href="{{ url_for('pokedex_grid', type=pokemon_dict[dexnum]['Pokemon'].type2|safe) }}">
-                            <img class="type_icon2" alt="{{ pokemon_dict[dexnum]['Pokemon'].type2|safe }}"
-                                 src="/static/images/Type_Icons/{{ pokemon_dict[dexnum]['Pokemon'].type2|safe }}.png">
-                        </a>
-                    {% endif %}
-                </div>
+                {% endif %}
             </div>
-{#        </div>#}
+        </div>
+
     </div>
     {% if loop.index0 % 4 == 3 %}
         </div>
@@ -160,85 +201,86 @@
 <!-- Main Container Ends -->
 </body>
 <script>
-    function color_type(classname) {
-        let type1 = document.getElementsByClassName(classname);
+    function color_cards() {
+        let cards = document.getElementsByClassName("cards");
         {#let type2 = document.getElementsByClassName("type2");#}
-        for (let i = 0; i < type1.length; i++) {
-            {#console.log(type1[i].textContent);#}
-            switch (type1[i].id) {
+        for (let i = 0; i < cards.length; i++) {
+            switch (cards[i].className.substr(6)) {
                 case("Grass"):
-                    type1[i].style.color = "black";
-                    type1[i].parentElement.style.backgroundColor = "#5F9569";
+                    cards[i].style.color = "black";
+                    cards[i].style.backgroundColor = "#5F9569";
                     break;
                 case("Bug"):
-                    type1[i].style.color = "black";
-                    type1[i].parentElement.style.backgroundColor = "#7AC89E";
+                    cards[i].style.color = "black";
+                    cards[i].style.backgroundColor = "#7AC89E";
                     break;
                 case("Fire"):
-                    type1[i].style.color = "black";
-                    type1[i].parentElement.style.backgroundColor = "#E64556";
-                    //Name and HP
-                    type1[i].parentNode.children[0].children[0].style.color = "black";
-                    type1[i].parentNode.children[0].children[1].style.color = "black";
-                    type1[i].parentNode.children[1].style.color = "black";
-                {#console.log();#}
+                    cards[i].style.color = "black";
+                    cards[i].style.backgroundColor = "#E64556";
+                    cards[i].getElementsByClassName("name")[0].style.color = "black";
+                    cards[i].getElementsByClassName("hp")[0].style.color = "black";
+                    cards[i].getElementsByClassName("stage_wrapper")[0].style.color = "black";
+                    cards[i].getElementsByClassName("delete-icon")[0].setAttribute("src", "/static/images/delete-black.png")
                     break;
                 case("Ghost"):
                 case("Poison"):
                 case("Psychic"):
-                    type1[i].style.color = "black";
-                    type1[i].parentElement.style.backgroundColor = "#7C6EBB";
+                    cards[i].style.color = "black";
+                    cards[i].style.backgroundColor = "#7C6EBB";
                     break;
                 case("Water"):
-                    type1[i].style.color = "black";
-                    type1[i].parentElement.style.backgroundColor = "#84ADD7";
+                    cards[i].style.color = "black";
+                    cards[i].style.backgroundColor = "#84ADD7";
                     break;
                 case("Ice"):
-                    type1[i].style.color = "lightblue";
-                    type1[i].parentElement.style.backgroundColor = "lightblue";
+                    cards[i].style.color = "black";
+                    cards[i].style.backgroundColor = "lightblue";
                     break;
                 case("Ground"):
-                    type1[i].style.color = "white";
-                    type1[i].parentElement.style.backgroundColor = "#332011";
-                    type1[i].parentElement.children[4].style.color = "white";
-                    type1[i].parentElement.children[5].style.color = "white";
-                    type1[i].parentElement.children[6].children[0].style.color = "white";
-                    type1[i].parentElement.children[8].children[0].style.color = "white";
-                    type1[i].parentElement.children[8].children[1].style.color = "white";
-                    type1[i].parentElement.children[8].children[2].style.color = "white";
-                    type1[i].parentElement.children[8].children[1].children[0].style.color = "white";
-                    type1[i].parentElement.children[8].children[1].children[0].style.color = "white";
+                    cards[i].style.color = "white";
+                    cards[i].style.backgroundColor = "#332011";
+                    cards[i].getElementsByClassName("table_stats")[0].style.color = "white";
+                    cards[i].getElementsByClassName("description")[0].style.color = "white";
+                    cards[i].getElementsByClassName("table_type")[0].children[0].style.color = "white";
+                    cards[i].getElementsByClassName("illustrator")[0].style.color = "white";
+                    cards[i].getElementsByClassName("restorer")[0].style.color = "white";
+                    cards[i].getElementsByClassName("creation")[0].style.color = "white";
+                    cards[i].getElementsByClassName("restorer_link")[0].style.color = "white";
                     break;
                 case("Rock"):
-                    type1[i].style.color = "brown";
-                    type1[i].parentElement.style.backgroundColor = "#333333";
-                    type1[i].parentElement.children[4].style.color = "white";
-                    type1[i].parentElement.children[5].style.color = "white";
-                    type1[i].parentElement.children[6].children[0].style.color = "white";
-                    type1[i].parentElement.children[8].children[0].style.color = "white";
-                    type1[i].parentElement.children[8].children[1].style.color = "white";
-                    type1[i].parentElement.children[8].children[2].style.color = "white";
-                    type1[i].parentElement.children[8].children[1].children[0].style.color = "white";
+                    cards[i].style.color = "brown";
+                    cards[i].style.backgroundColor = "#333333";
+                    cards[i].getElementsByClassName("table_stats")[0].style.color = "white";
+                    cards[i].getElementsByClassName("description")[0].style.color = "white";
+                    cards[i].getElementsByClassName("table_type")[0].children[0].style.color = "white";
+                    cards[i].getElementsByClassName("illustrator")[0].style.color = "white";
+                    cards[i].getElementsByClassName("restorer")[0].style.color = "white";
+                    cards[i].getElementsByClassName("creation")[0].style.color = "white";
+                    cards[i].getElementsByClassName("restorer_link")[0].style.color = "white";
                     break;
                 case("Fighting"):
-                    type1[i].style.color = "black";
-                    type1[i].parentElement.style.backgroundColor = "#C04C4B";
+                    cards[i].style.color = "black";
+                    cards[i].style.backgroundColor = "#C04C4B";
                     break;
                 case("Electric"):
-                    type1[i].style.color = "black";
-                    type1[i].parentElement.style.backgroundColor = "#FAB61D";
+                    cards[i].style.color = "black";
+                    cards[i].style.backgroundColor = "#FAB61D";
                     break;
                 default:
-                    type1[i].style.color = "black";
-                    type1[i].parentElement.style.backgroundColor = "#BBBBBB";
+                    cards[i].style.color = "black";
+                    cards[i].style.backgroundColor = "#BBBBBB";
                     break;
             }
-
         }
     }
 
-    color_type("hidden_type1");
+    color_cards();
+    const width  = window.innerWidth || document.documentElement.clientWidth ||
+    document.body.clientWidth;
+    const height = window.innerHeight|| document.documentElement.clientHeight||
+    document.body.clientHeight;
 
+    console.log("Width: ", width, " Height: ", height);
 
 </script>
 </html>

@@ -1,39 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, session, Response
-from flask_cors import CORS, cross_origin
-from flask_marshmallow import Marshmallow
-from flask import Flask, jsonify, redirect, render_template, session, url_for, Response, request
-
+from flask import Flask, render_template, request, redirect, url_for, Response
+# from flask_cors import CORS, cross_origin
 from werkzeug import exceptions
-
-from authlib.integrations.flask_client import OAuth, OAuthError
-# used for catching token exceptions
-
-from logging.config import dictConfig
-# loads config from .env
-from dotenv import load_dotenv, find_dotenv
-# used for cross-site pages
-
-
-# from Models import Base
-from errorHandling.errorHandler import ehandle
-from Auth0.Auth0 import authO
-from home.main_page import home_blueprint
-from api.api import api_endpoints
-from flask_sqlalchemy import SQLAlchemy
-
 from sqlalchemy import select, create_engine, Column, Integer, String, Float, Table, MetaData, delete, or_
-from sqlalchemy.orm import Session, declarative_base, sessionmaker
-from sqlalchemy.sql import func
-
-from datetime import datetime, timedelta
-from typing import Dict, List
-import pprint
-import jwt
-import json
-import time
-
-from Pokemon.Pokemon import pokemon_csv_dict, createPokemon
-
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 # Models Imports
 # from Models import db
@@ -41,12 +10,6 @@ from Models import Base
 from Models.PokemonModel import Pokemon
 from Models.UserModel import User
 from Models.BaseStatModel import Base_Stat
-
-# # Tables Imports Not needed
-# from Tables import metadata
-# from Tables.PokedexTable import Pokedex_table
-# from Tables.UserTable import UserTable
-# from User.UserFunctions import userExist
 
 from User.UserFunctions import current_milli_time
 from Pokemon.Pokemon import typing_csv_dict, get_all_pokemon_weakness_resistance
@@ -58,20 +21,16 @@ from Pokemon.Pokemon import typing_csv_dict, get_all_pokemon_weakness_resistance
 
 
 """dotenv lib to load .env file for flask config"""
-ENV_FILE = find_dotenv()
-if ENV_FILE:
-    load_dotenv()
+# ENV_FILE = find_dotenv()
+# if ENV_FILE:
+#     load_dotenv()
 
 
 
 
 app = Flask(__name__)
 
-
-
 # db.init_app(app)
-
-
 
 # cors = CORS(app)
 # oauth = OAuth(app)
@@ -112,13 +71,10 @@ and holds onto it until we commit all changes and/or close the session object.
 session = Session()
 
 
-
-
-
-app.register_blueprint(ehandle, url_prefix="")
-app.register_blueprint(authO, url_prefix="")
+# app.register_blueprint(ehandle, url_prefix="")
+# app.register_blueprint(authO, url_prefix="")
 # app.register_blueprint(home_blueprint, url_prefix="")
-app.register_blueprint(api_endpoints, url_prefix="")
+# app.register_blueprint(api_endpoints, url_prefix="")
 
 # engine = db.engine
 # connection = engine.connect()
@@ -136,13 +92,13 @@ def hello_world():
 
 
 @app.route('/login/')
-@cross_origin()
+# @cross_origin()
 def login():
     return render_template('login.html')
 
 
 @app.route('/pokedex')
-@cross_origin()
+# @cross_origin()
 def pokedex_table():
 
     if len(request.args) > 0:
@@ -171,7 +127,7 @@ def pokedex_table():
 
 
 @app.route('/createUser', methods=['GET', 'POST'])
-@cross_origin()
+# @cross_origin()
 def create_user():
     if request.form:
         print(f"""
@@ -224,8 +180,22 @@ def create_user():
 def pokedex_grid():
     pokemon_dict = {}
 
+    if request.args.get('delete'):
+        # print(f"Delete: {delete}")
+        delete_pokemon = request.args.get("delete")
+        print(f"Delete: {delete_pokemon}")
+        query = session.query(Pokemon).get(delete_pokemon)
+        if query:
+            session.delete(query)
+            session.commit()
+        query = session.query(Base_Stat).get(delete_pokemon)
+        if query:
+            session.delete(query)
+            session.commit()
+
     # if type passed in as url param, only query pokemon with matching type
     if request.args.get('type'):
+        print("TYPE")
         clicked_type = request.args.get('type')
         for p in session.query(Pokemon).filter(or_(Pokemon.type1 == clicked_type, Pokemon.type2 == clicked_type,)):
             pokemon_dict[p.dexnum] = {}
@@ -240,6 +210,7 @@ def pokedex_grid():
         #     pokemon_dict[b.dexnum]['Stats'] = b
 
     else:
+        print("HERE")
         for p in session.query(Pokemon).all():
             pokemon_dict[p.dexnum] = {}
             pokemon_dict[p.dexnum]['Pokemon'] = p
@@ -250,6 +221,7 @@ def pokedex_grid():
         for b in session.query(Base_Stat).all():
             pokemon_dict[b.dexnum]['Stats'] = b
 
+    # print(pokemon_dict)
     return render_template('Pokedex_Grid.html', pokemon_dict=pokemon_dict)
 
 
