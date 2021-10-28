@@ -46,8 +46,8 @@ app = Flask(__name__)
 
 # Connection Explanation:
 # Driver :// user : password @ hostname(uri) : port / Database
-engine = create_engine('postgresql://postgres:pokemon@localhost:5432/Pokemon')
-
+# engine = create_engine('postgresql://postgres:pokemon@localhost:5432/Pokemon')
+engine = create_engine('postgresql://postgres:pokemon@192.168.130.1:5432/Pokemon')
 """
 The usual way to issue CREATE is to use create_all() on the MetaData object. 
 This method will issue queries that first check for the existence of each individual table, 
@@ -231,5 +231,6 @@ def test_route():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0")
     # app.run(debug=True)
+
