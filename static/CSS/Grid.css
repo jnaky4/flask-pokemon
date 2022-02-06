@@ -459,7 +459,21 @@ body {
 	/*border: 1px solid black;*/
 	display: flex;
 	float: right;
+}
 
+.type_icon:hover, .type_icon2:hover, .delete-icon:hover{
+	animation-duration: .2s;
+	animation-name: wiggle;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+}
+@keyframes wiggle {
+	from{
+		transform: rotate(-15deg);
+	}
+	to{
+		transform: rotate(15deg);
+	}
 }
 
 
