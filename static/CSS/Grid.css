@@ -5,6 +5,26 @@ body {
 	background-color: #000000;
 	margin: 0;
 }
+.clicked_card{
+	/*border: 2px solid red;*/
+	/*background-color: red;*/
+	position: fixed !important;
+
+	top: 50% !important;
+	left: 50% !important;
+
+  	transform: translate(-50%, -50%) !important;
+  	/*margin: -25px 0 0 -25px !important;*/
+	/*margin: 0 auto !important;*/
+	/*margin-left: 15% !important;*/
+	/*margin-right: 15% !important;*/
+	/*display: block !important;*/
+	height: 98% !important;
+	width: 70% !important;
+	z-index: 5 !important;
+	/*transition: transform 1s !important;*/
+
+}
 /*Start of Menu Styling*/
 .fixed_menu{
 	width: 100%;
@@ -145,6 +165,7 @@ body {
 	padding-bottom: 0;
 	border-radius: 5px;
 	border: 8px solid #FFDE00;
+	transition: transform 1s;
 
 }
 .cards:hover{
@@ -461,12 +482,13 @@ body {
 	float: right;
 }
 
+
 .type_icon:hover, .type_icon2:hover, .delete-icon:hover{
-	animation-duration: .2s;
-	animation-name: wiggle;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
+	animation: .2s infinite alternate wiggle;
 }
+/*.cards:hover{*/
+/*	animation: .1s infinite alternate rotate;*/
+/*}*/
 @keyframes wiggle {
 	from{
 		transform: rotate(-15deg);
@@ -475,6 +497,14 @@ body {
 		transform: rotate(15deg);
 	}
 }
+/*@keyframes rotate {*/
+/*		from{*/
+/*		transform: rotate(0deg);*/
+/*	}*/
+/*	to{*/
+/*		transform: rotate(359deg);*/
+/*	}*/
+/*}*/
 
 
 /* Mobile */
@@ -521,5 +551,4 @@ body {
 		max-width: 50px;
 		height: auto;
 	}
-
 }

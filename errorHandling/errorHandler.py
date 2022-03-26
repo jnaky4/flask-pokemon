@@ -6,8 +6,6 @@ import jwt
 
 ehandle = Blueprint('errorHandler', __name__)
 
-#TODO add error handling for looker
-
 
 @ehandle.errorhandler(exceptions.BadRequest)
 def handle_bad_request(e):

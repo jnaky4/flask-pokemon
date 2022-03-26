@@ -13,6 +13,8 @@ from Models.BaseStatModel import Base_Stat
 
 from User.UserFunctions import current_milli_time
 from Pokemon.Pokemon import typing_csv_dict, get_all_pokemon_weakness_resistance
+from Docker.docker_library import auto_start_container
+from Database.database import reset_database
 
 # print(typing_csv_dict["Grass"]["Fire"])
 # get_all_pokemon_weakness_resistance("Water", "Psychic")
@@ -26,9 +28,12 @@ from Pokemon.Pokemon import typing_csv_dict, get_all_pokemon_weakness_resistance
 #     load_dotenv()
 
 
-
-
 app = Flask(__name__)
+
+
+# runs the image postgres and creates a container called pokemon-postgres
+auto_start_container("postgres", "pokemon-postgres")
+reset_database()
 
 # db.init_app(app)
 
@@ -82,6 +87,7 @@ session = Session()
 
 @app.route('/')
 def main():
+
     return render_template('main.html')
 
 
@@ -210,7 +216,6 @@ def pokedex_grid():
         #     pokemon_dict[b.dexnum]['Stats'] = b
 
     else:
-        print("HERE")
         for p in session.query(Pokemon).all():
             pokemon_dict[p.dexnum] = {}
             pokemon_dict[p.dexnum]['Pokemon'] = p

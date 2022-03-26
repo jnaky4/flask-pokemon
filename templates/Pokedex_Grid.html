@@ -75,8 +75,8 @@
         {% if loop.index0 % 4 == 0 %}
             <div class="gallery">
         {% endif %}
-    <div class="cards {{ pokemon_dict[dexnum]['Pokemon'].type1|safe }}">
-
+{#onmouseout="lost_focus_card(this.id)"#}
+    <div class="cards {{ pokemon_dict[dexnum]['Pokemon'].type1|safe }}" id="{{ pokemon_dict[dexnum]['Pokemon'].dexnum|safe}}"  onclick="card_clicked(this.id)">
         <a href="/pokedex_grid?delete={{ dexnum }}"><img class="delete-icon" alt="delete" src="/static/images/delete.png"></a>
         <div class="card_header">
             <p class="name">{{ pokemon_dict[dexnum]['Pokemon'].name|safe }}</p>
@@ -88,11 +88,11 @@
             <div class="stage_arrow_down"></div>
         </div>
         <div class="image_wrapper">
-            <a class="image_link" href="{{ url_for('pokedex_table') }}">
+
+{#            <a class="image_link" href="{{ url_for('pokedex_table') }}">#}
                 <img class="img" src="/static/images/Pokemon/{{ (dexnum|string).rjust(3, '0') }}{{ pokemon_dict[dexnum]['Pokemon'].name|safe }}.png"
                      alt="Pokedex" />
-
-            </a>
+{#            </a>#}
             <img class="holo" alt="holo" src="/static/images/Holo.png" />
 {#            <img class="holo" alt="holo" src="/static/images/B_Holo.png" />#}
         </div>
@@ -189,7 +189,6 @@
                 {% endif %}
             </div>
         </div>
-
     </div>
     {% if loop.index0 % 4 == 3 %}
         </div>
@@ -201,7 +200,12 @@
 <!-- Main Container Ends -->
 </body>
 <script>
+
+    document.addEventListener("DOMContentLoaded", color_cards);
+    document.addEventListener("DOMContentLoaded", size_cards);
+
     function color_cards() {
+        {#console.log("Coloring Cards");#}
         let cards = document.getElementsByClassName("cards");
         {#let type2 = document.getElementsByClassName("type2");#}
         for (let i = 0; i < cards.length; i++) {
@@ -275,13 +279,52 @@
         }
     }
 
-    color_cards();
-    const width  = window.innerWidth || document.documentElement.clientWidth ||
-    document.body.clientWidth;
-    const height = window.innerHeight|| document.documentElement.clientHeight||
-    document.body.clientHeight;
+    function size_cards(){
 
-    console.log("Width: ", width, " Height: ", height);
+    }
+
+    function card_clicked(id){
+        {#console.log("Clicked!");#}
+        let current_card = document.getElementsByClassName("clicked_card");
+        if(current_card.length === 1){
+            current_card[0].classList.toggle("clicked_card");
+        } else {
+            let card = document.getElementById(id);
+            card.classList.toggle("clicked_card");
+            {#card.classList.toggle("clicked_card_image");#}
+        }
+    }
+    const sWidth = screen.width;
+    const sHeight = screen.height;
+
+    const width  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    const height = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
+
+    console.log("wWidth: ", width, " wHeight: ", height);
+    console.log("sWidth: ", sWidth, " sHeight: ", sHeight)
+
+    calculateCardSize();
+    calculateFocusCard();
+
+    function calculateCardSize(){
+        const screenHeightRatio = sHeight / sWidth;
+        console.log("Screen Ratio: ", screenHeightRatio);
+        let cardWidth = sWidth / 5;
+        let cardHeight = cardWidth * 1.4
+        console.log("if 4 cards per screen");
+        console.log("Card Width: ", cardWidth, " Card Height: ", cardHeight);
+    }
+
+    function calculateFocusCard(){
+        const width  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        const height = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
+        const screenRatio = sHeight / sWidth;
+        let cardHeight = height * .9;
+        let cardWidth = cardHeight / 1.4;
+        console.log("Focus Card");
+        console.log("Card Width: ", cardWidth, " Card Height: ", cardHeight);
+
+    }
 
 </script>
 </html>
