@@ -16,6 +16,11 @@ from Pokemon.Pokemon import typing_csv_dict, get_all_pokemon_weakness_resistance
 from Docker.docker_library import auto_start_container
 from Database.database import reset_database
 
+import os
+from multiprocessing import Pool
+from sounds.sounds import get_a_pokemon_sound
+from unicodedata import normalize
+import re
 # print(typing_csv_dict["Grass"]["Fire"])
 # get_all_pokemon_weakness_resistance("Water", "Psychic")
 
@@ -34,6 +39,15 @@ app = Flask(__name__)
 # runs the image postgres and creates a container called pokemon-postgres
 auto_start_container("postgres", "pokemon-postgres")
 reset_database()
+
+cpus = os.cpu_count()
+
+urls = []
+for j in range(1, 152):
+    urls.append(f"https://pokemoncries.com/cries-old/{j}.mp3")
+
+with Pool(cpus) as pool:
+    res = pool.map(get_a_pokemon_sound, urls)
 
 # db.init_app(app)
 
@@ -230,9 +244,32 @@ def pokedex_grid():
     return render_template('Pokedex_Grid.html', pokemon_dict=pokemon_dict)
 
 
+@app.route('/routes')
+def pokemon_routes():
+    return render_template('pokemon_routes.html')
+
+
+@app.route('/reader')
+def reader():
+    moby_path = os.path.join(os.getcwd(), 'static', 'moby.txt')
+    moby = []
+    with open(moby_path, 'r') as f:
+        contents = f.readlines()
+        for line in contents:
+            temp = normalize('NFKD', line).encode('ascii', 'ignore')
+            temp = temp.decode('utf-8')
+            temp = temp.replace('-', ' ')
+            # arr = re.split(r'\S+|-', temp)
+            arr = temp.split()
+            if len(arr) > 0:
+                moby += arr
+
+    return render_template('reader.html', moby=moby)
+
 @app.route('/1')
 def test_route():
     return render_template("test.html")
+
 
 
 if __name__ == '__main__':

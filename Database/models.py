@@ -32,9 +32,7 @@ class Pokemon(base):
 
     # child = relationship("Child", back_populates="Parent", uselist=False)
 
-    # __init__ where are you?
-
-    # Our User class, as defined using the Declarative system, : from Base in __init__.py
+    # Our Pokemon class, as defined using the Declarative system, : from Base in __init__.py
     # has been provided with a constructor (e.g. __init__() method)
     # which automatically accepts keyword names that match the columns we’ve mapped.
     # We are free to define any explicit __init__() method we prefer on our class,
@@ -42,13 +40,22 @@ class Pokemon(base):
 
     # __repr__ :  special method used to represent a class’s objects as a string.
     def __repr__(self):
-        return "<Pokemon(dexnum=%d, name='%s', type1='%s', type2='%s', evolve_level=%d," \
-               "gender_ratio='%s', height=%f, weight=%f, category='%s'," \
-               "lvl_speed=%f, base_exp=%d, catch_rate=%d" \
-               "description='%s')>" % \
-               (self.dexnum, self.name, self.type1, self.type2, self.evolve_level,
-                self.gender_ratio, self.height, self.weight, self.category, self.lvl_speed,
-                self.base_exp, self.catch_rate, self.description)
+        return f"<Pokemon(dexnum={self.dexnum}, name='{self.name}', type1='{self.type1}', type2='{self.type2}', " \
+               f"evolve_level={self.evolve_level}, gender_ratio='{self.gender_ratio}', height={self.height}, " \
+               f"weight={self.weight}, category='{self.category}', lvl_speed={self.lvl_speed}, " \
+               f"base_exp={self.base_exp}, catch_rate={self.catch_rate}" \
+               f"description='{self.description}')>"
+
+
+# class Route(base):
+#     __tablename__ = 'Routes'
+#     area = Column(String, primary_key=True)
+#     available_pokemon = Column([])
+#
+#
+# class Available(base):
+#
+#     pass
 
 
 class Base_Stats(base):
@@ -66,10 +73,9 @@ class Base_Stats(base):
     # parent = relationship("Parent", backref=backref("child", uselist=False))
 
     def __repr__(self):
-        return "<Base_Stats(dexnum=%d, hp=%d, attack=%d, defense=%d," \
-               "special_attack=%d, special_defense=%d, speed=%d)>" % \
-               (self.dexnum, self.hp, self.attack, self.defense, self.special_attack,
-                self.special_defense, self.speed)
+        return f"<Base_Stats(dexnum={self.dexnum}, hp={self.hp}, attack={self.attack}, defense={self.defense}," \
+               f"special_attack={self.special_attack}, special_defense={self.defense}, speed={self.speed})>"
+
 
 
 class User(base):
@@ -85,8 +91,6 @@ class User(base):
     zipcode = Column(Integer)
 
     def __repr__(self):
-        return "<User(id=%d, name='%s', email='%s', password='%s', telephone='%s'," \
-               "address='%s'," \
-               "city='%s', state='%s', zipcode=%d)>" % \
-               (self.id, self.name, self.email, self.password, self.telephone,
-                self.address, self.city, self.state, self.zipcode)
+        return f"<User(id={self.id}, name='{self.name}', email='{self.email}', password='{self.password}', telephone='{self.telephone}'," \
+               f"address='{self.address}'," \
+               f"city='{self.city}', state='{self.state}', zipcode={self.zipcode})>"

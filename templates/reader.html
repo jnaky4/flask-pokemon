@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #reader{
+            text-align: center;
+            font-size: 10em;
+        }
+    </style>
+</head>
+<body>
+<div id="reader">Hello</div>
+</body >
+<script>
+    cycle()
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function cycle() {
+        let reader = document.getElementById('reader')
+        let waitT = 0
+        let txt = ''
+        {% for word in moby %}
+            txt = (`{{ word|safe }}`);
+            reader.textContent = txt;
+            waitT = (txt.length * 15) + 100;
+            switch (txt[txt.length-1]) {
+                case ',':
+                case ';':
+                    waitT += 150;
+                    break;
+                case '.':
+                case '?':
+                case '!':
+                    waitT += 200;
+                    break;
+            }
+            await sleep(waitT);
+        {% endfor %}
+    }
+</script>
+</html>

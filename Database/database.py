@@ -7,7 +7,6 @@ from Database.models import base, Pokemon, Base_Stats, User
 import os
 
 
-
 # client.containers.run("postgres", detach=True, ports=[5432])
 
 
@@ -41,17 +40,29 @@ engine = create_engine('postgresql://postgres:pokemon@localhost:5432/Pokemon')
 cwd = os.getcwd()
 pokemon_csv = os.path.join(cwd, 'CSV', "Pokemon.csv")
 base_stats_csv = os.path.join(cwd, 'CSV', "Base_Stats.csv")
+routes_csv = os.path.join(cwd, 'CSV', "Routes.csv")
 
 # explanation of csv reader
 # https://www.delftstack.com/howto/python/python-csv-to-dictionary/
 pokedex_items = pd.read_csv(pokemon_csv, index_col=0, sep=",", encoding='cp1252')
 base_stats_items = pd.read_csv(base_stats_csv, index_col=0, sep=",", encoding='cp1252')
+route_item = pd.read_csv(routes_csv, index_col=0, sep=",", encoding='cp1252')
 # items = pd.read_csv(pokemon_csv, index_col=0, sep=",")
+
+
 
 # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.transpose.html?highlight=transpose#pandas.DataFrame.transpose
 # transpose flips the keys to be row 0 instead of column 0
 pokemon_csv_dict = pokedex_items.transpose().to_dict(orient='series')
 base_stats_dict = base_stats_items.transpose().to_dict(orient='series')
+# route_dict = route_item.transpose().to_dict(orient='series')
+
+
+# print(route_dict)
+def create_route_dict(route_list):
+    for i in route_item:
+        print(route_item)
+    pass
 
 
 def createPokemon(dexnum: int, pokemon_csv_dict: Dict) -> Pokemon:
